@@ -1,0 +1,58 @@
+# AI Assistant Guidelines for ScreenPad Streamdeck Clone
+
+You are an expert AI software engineer specialized in building high-performance, premium, and beautiful desktop interfaces using Svelte, TypeScript, Rust, and Tauri v1.
+
+## Hardware & Canvas Specifications
+- **Target Device**: Asus Zenbook Pro Duo ScreenPad Plus (secondary touch monitor).
+- **Physical Resolution**: `3840 x 1100` pixels (Ultra-wide ~3.5:1 ratio).
+- **Logical Resolution (Scaling)**: Viewports are highly sensitive to OS scaling (e.g., 200% scaling yields `1920 x 550` viewport). 
+- **CRITICAL**: Use flexible CSS grids, flexbox, and relative length units (`vh`, `vw`, `%`) to ensure the layout fits the screen perfectly without overflow or clipping under different scaling factors.
+- **Window Behavior**: Borderless, non-resizable, and always fitted to the ScreenPad aspect ratio. 
+
+## UI/UX & Design Directives
+- **Touch-First Target Sizes**: Buttons and interactive elements must have a minimum touch footprint of `72px x 72px` with a minimum `12px` padding/gutter to prevent mis-taps.
+- **Strict Touch Handlers**: Prevent accidental double-tap to zoom or scrolling. Apply:
+  ```css
+  * {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  ```
+- **Zero Scroll Policy**: The application must be exactly full screen without horizontal or vertical scrolling (`overflow: hidden` on body and container).
+- **Premium Aesthetics (Glassmorphic Dark Mode)**:
+  - Base Background: Deep onyx `#07080b` or subtle gradient.
+  - Cards/Widgets: High-end glass panels (`background: rgba(20, 22, 28, 0.65)` with `backdrop-filter: blur(20px)` and border-radius `16px`).
+  - Borders: Thin, semi-transparent glowing lines (`border: 1px solid rgba(255, 255, 255, 0.08)`).
+  - Hover/Active States: Accent glows using HSL-based palettes (e.g., violet, electric blue, neon green). Smooth transitions on tap (scale down slightly to `0.96` on `:active` to simulate physical tactile feedback).
+- **Grid Layout Zones (Left-to-Right)**:
+  1. **System Statistics (Left - 20% width)**: Real-time gauges/meters showing CPU, RAM, GPU, and Network activity.
+  2. **Active Deck (Center - 60% width)**: Streamdeck button matrix (e.g., 6 columns x 3 rows or 8 columns x 3 rows). Support paginated swipe transitions or profile tabs.
+  3. **Control Hub (Right - 20% width)**: Vertical/horizontal range sliders for System Volume and Brightness, media control buttons (prev, play/pause, next).
+
+## Architecture & Code Conventions
+
+### 1. Frontend (Svelte & TypeScript)
+- Use Svelte stores to manage global state (active profile, button layouts, active page, system monitoring states).
+- Store layout configurations in a clean, JSON-serializable format (`deck_config.json`). Allow saving/loading from local storage or via Tauri's file API.
+- Handle active tap gestures gracefully: use standard click events but ensure fast responsiveness (no 300ms delay due to `touch-action: manipulation`).
+- Component structure:
+  - `src/lib/SystemMonitor.svelte` - CPU, Memory, Network status meters.
+  - `src/lib/ButtonGrid.svelte` - Renders the action grid for the current profile.
+  - `src/lib/ButtonKey.svelte` - Visual key representation (icon, label, visual state, active animation).
+  - `src/lib/ControlHub.svelte` - Sound, brightness, media buttons.
+
+### 2. Backend (Tauri & Rust)
+- Implement Tauri commands in `src-tauri/src/main.rs`. Keep them clean, structured, and error-resilient.
+- **Command Categories**:
+  - `execute_hotkey`: Synthesizes key strokes to trigger shortcuts (use native keyboard integration or standard system command invocation).
+  - `launch_application`: Spawns a background process to launch a program/URL.
+  - `get_system_stats`: Returns CPU/RAM metrics on an interval (using a crate like `sysinfo` or reading system files).
+  - `adjust_volume`/`adjust_brightness`: Platform-specific calls or shell execution to modify sound/brightness.
+- Run state-polling tasks in a separate Rust thread or Svelte interval to keep the interface highly responsive (INP < 50ms).
+
+## Rules for Code Generation & Editing
+1. **Never use generic standard colors**: Rely strictly on custom CSS variables matching the glassmorphic dark theme.
+2. **Retain existing imports/configs**: When modifying, do not erase other configurations unless directly requested.
+3. **Inline Documentation**: Document complex keyboard mapping schemes or system IPC (Inter-Process Communication) boundaries.
+4. **Touch Safety**: Always ensure text labels and custom icons inside streamdeck buttons are vertically and horizontally centered with flexbox or grid.
