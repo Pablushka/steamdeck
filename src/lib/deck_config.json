@@ -1,0 +1,135 @@
+{
+  "activeProfile": "Default",
+  "profiles": {
+    "Default": {
+      "name": "Default Profile",
+      "pages": [
+        {
+          "pageIndex": 0,
+          "buttons": [
+            {
+              "id": "btn_browser",
+              "label": "Web Browser",
+              "icon": "🌐",
+              "type": "launch",
+              "payload": "https://google.com",
+              "bgColor": "rgba(59, 130, 246, 0.15)",
+              "glowColor": "#3b82f6"
+            },
+            {
+              "id": "btn_vscode",
+              "label": "VS Code",
+              "icon": "💻",
+              "type": "launch",
+              "payload": "code",
+              "bgColor": "rgba(16, 185, 129, 0.15)",
+              "glowColor": "#10b981"
+            },
+            {
+              "id": "btn_discord",
+              "label": "Discord",
+              "icon": "💬",
+              "type": "launch",
+              "payload": "discord",
+              "bgColor": "rgba(99, 102, 241, 0.15)",
+              "glowColor": "#6366f1"
+            },
+            {
+              "id": "btn_spotify",
+              "label": "Spotify",
+              "icon": "🎵",
+              "type": "launch",
+              "payload": "spotify",
+              "bgColor": "rgba(34, 197, 94, 0.15)",
+              "glowColor": "#22c55e"
+            },
+            {
+              "id": "btn_folder_gaming",
+              "label": "Gaming Mode",
+              "icon": "🎮",
+              "type": "folder",
+              "payload": "GamingProfile",
+              "bgColor": "rgba(236, 72, 153, 0.15)",
+              "glowColor": "#ec4899"
+            },
+            {
+              "id": "btn_mute_mic",
+              "label": "Mute Mic",
+              "icon": "🎤",
+              "type": "hotkey",
+              "payload": "ctrl+shift+m",
+              "bgColor": "rgba(239, 68, 68, 0.15)",
+              "glowColor": "#ef4444"
+            },
+            {
+              "id": "btn_screenshot",
+              "label": "Screenshot",
+              "icon": "📸",
+              "type": "hotkey",
+              "payload": "super+shift+s",
+              "bgColor": "rgba(245, 158, 11, 0.15)",
+              "glowColor": "#f59e0b"
+            },
+            {
+              "id": "btn_terminal",
+              "label": "Terminal",
+              "icon": "⚡",
+              "type": "launch",
+              "payload": "x-terminal-emulator",
+              "bgColor": "rgba(107, 114, 128, 0.15)",
+              "glowColor": "#6b7280"
+            }
+          ]
+        }
+      ]
+    },
+    "GamingProfile": {
+      "name": "Gaming Profile",
+      "isFolder": true,
+      "parentProfile": "Default",
+      "pages": [
+        {
+          "pageIndex": 0,
+          "buttons": [
+            {
+              "id": "btn_gaming_back",
+              "label": "Back to Main",
+              "icon": "⬅️",
+              "type": "back",
+              "payload": "",
+              "bgColor": "rgba(107, 114, 128, 0.2)",
+              "glowColor": "#6b7280"
+            },
+            {
+              "id": "btn_steam",
+              "label": "Steam Launcher",
+              "icon": "🕹️",
+              "type": "launch",
+              "payload": "steam",
+              "bgColor": "rgba(59, 130, 246, 0.15)",
+              "glowColor": "#3b82f6"
+            },
+            {
+              "id": "btn_obs_record",
+              "label": "Start OBS Rec",
+              "icon": "🔴",
+              "type": "hotkey",
+              "payload": "ctrl+shift+r",
+              "bgColor": "rgba(239, 68, 68, 0.2)",
+              "glowColor": "#ef4444"
+            },
+            {
+              "id": "btn_obs_stream",
+              "label": "Go Live OBS",
+              "icon": "📡",
+              "type": "hotkey",
+              "payload": "ctrl+shift+l",
+              "bgColor": "rgba(168, 85, 247, 0.2)",
+              "glowColor": "#a855f7"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
